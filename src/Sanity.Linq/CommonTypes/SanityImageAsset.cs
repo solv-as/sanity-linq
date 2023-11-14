@@ -29,6 +29,12 @@ namespace Sanity.Linq.CommonTypes
 
         [JsonProperty("altText")]
         public string AltText { get; set; }
+
+        [JsonProperty("title")]
+        public string Title { get; set; }
+
+        [JsonProperty("description")]
+        public string Description { get; set; }
     }
 
     public class SanityImageAssetReference : SanityImageAsset

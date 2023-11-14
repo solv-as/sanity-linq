@@ -31,7 +31,7 @@ namespace Sanity.Linq
     {
         private static HttpClient _httpClient = new HttpClient();
 
-        public static async Task<SanityDocumentResponse<SanityImageAsset>> UploadImageAsync(this SanityClient client, Uri imageUrl, string label = null, CancellationToken cancellationToken = default)
+        public static async Task<SanityDocumentResponse<SanityImageAsset>> UploadImageAsync(this SanityClient client, Uri imageUrl, string label = null, string title = null, string description = null, CancellationToken cancellationToken = default)
         {
             if (imageUrl == null)
             {
@@ -47,7 +47,7 @@ namespace Sanity.Linq
             }
             using (var fs = await _httpClient.GetStreamAsync(imageUrl).ConfigureAwait(false))
             {
-                var result = await client.UploadImageAsync(fs, fileName, mimeType, label ?? "Source:" + imageUrl.OriginalString, cancellationToken).ConfigureAwait(false);
+                var result = await client.UploadImageAsync(fs, fileName, contentType: mimeType, label: label ?? "Source:" + imageUrl.OriginalString, cancellationToken: cancellationToken, title: title, description: description).ConfigureAwait(false);
                 fs.Close();
                 return result;
             }

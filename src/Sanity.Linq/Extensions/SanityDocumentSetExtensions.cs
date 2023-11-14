@@ -32,7 +32,7 @@ namespace Sanity.Linq
     public static class SanityDocumentSetExtensions
     {
         /// <summary>
-        /// Returns Sanity GROQ query for the expression. 
+        /// Returns Sanity GROQ query for the expression.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
@@ -272,7 +272,7 @@ namespace Sanity.Linq
         }
 
         public static SanityMutationBuilder<TDoc> DeleteByQuery<TDoc>(this SanityDocumentSet<TDoc> docs, Expression<Func<TDoc,bool>> query)
-        {            
+        {
             return docs.Mutations.DeleteByQuery(query);
         }
 
@@ -317,18 +317,18 @@ namespace Sanity.Linq
         }
 
 
-        public static Task<SanityDocumentResponse<SanityImageAsset>> UploadAsync(this SanityDocumentSet<SanityImageAsset> images, Stream stream, string filename, string contentType = null, string label = null, CancellationToken cancellationToken = default)
+        public static Task<SanityDocumentResponse<SanityImageAsset>> UploadAsync(this SanityDocumentSet<SanityImageAsset> images, Stream stream, string filename, string contentType = null, string label = null, string title = null, string description = null, CancellationToken cancellationToken = default)
         {
-            return images.Context.Client.UploadImageAsync(stream, filename, contentType, label, cancellationToken);
+            return images.Context.Client.UploadImageAsync(stream, filename, contentType: contentType, label: label, title: title, description: description, cancellationToken: cancellationToken);
         }
 
         public static Task<SanityDocumentResponse<SanityImageAsset>> UploadAsync(this SanityDocumentSet<SanityImageAsset> images, FileInfo file, string filename, string contentType = null, string label = null, CancellationToken cancellationToken = default)
         {
             return images.Context.Client.UploadImageAsync(file, label, cancellationToken);
         }
-        public static Task<SanityDocumentResponse<SanityImageAsset>> UploadAsync(this SanityDocumentSet<SanityImageAsset> images, Uri uri, string label = null, CancellationToken cancellationToken = default)
+        public static Task<SanityDocumentResponse<SanityImageAsset>> UploadAsync(this SanityDocumentSet<SanityImageAsset> images, Uri uri, string label = null, string title = null, string description = null, CancellationToken cancellationToken = default)
         {
-            return images.Context.Client.UploadImageAsync(uri, label, cancellationToken);
+            return images.Context.Client.UploadImageAsync(uri, label, title, description, cancellationToken);
         }
 
         public static Task<SanityDocumentResponse<SanityFileAsset>> UploadAsync(this SanityDocumentSet<SanityFileAsset> images, Stream stream, string filename, string contentType = null, string label = null, CancellationToken cancellationToken = default)

@@ -62,8 +62,8 @@ namespace Sanity.Linq.Tests
             var result1 = await categories.Where(c => namesToFind.Contains(c.Title)).ToListAsync();
             Assert.True(result1.Count == 2);
 
-            var ïdsToFind = new List<int> { 1, 2 };
-            var result2 = await categories.Where(c => ïdsToFind.Contains(c.InternalId)).ToListAsync();
+            var idsToFind = new List<int> { 1, 2 };
+            var result2 = await categories.Where(c => idsToFind.Contains(c.InternalId)).ToListAsync();
             Assert.True(result2.Count == 2);
 
 
@@ -114,7 +114,7 @@ namespace Sanity.Linq.Tests
             // Chained mutations
             categories.Create(category1).Create(category2).Create(category3);
 
-            
+
             // Create new author
             var author = new Author
             {
