@@ -13,14 +13,18 @@
 //  You should have received a copy of the MIT Licence
 //  along with this program.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Newtonsoft.Json;
 
 namespace Sanity.Linq.CommonTypes
 {
     public class SanityFileAsset : SanityAsset
     {
+        [JsonProperty("title")]
+        public string Title { get; set; }
+
+        [JsonProperty("description")]
+        public string Description { get; set; }
+
         public SanityFileAsset() : base()
         {
             Type = "sanity.fileAsset";

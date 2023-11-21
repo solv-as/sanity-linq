@@ -128,12 +128,12 @@ namespace Sanity.Linq
             }
         }
 
-        public virtual async Task<SanityDocumentResponse<SanityFileAsset>> UploadFileAsync(FileInfo file, string label = null, CancellationToken cancellationToken = default)
+        public virtual async Task<SanityDocumentResponse<SanityFileAsset>> UploadFileAsync(FileInfo file, string label = null, string title = null, string description = null, CancellationToken cancellationToken = default)
         {
             var mimeType = MimeTypeMap.GetMimeType(file.Extension);
             using (var fs = file.OpenRead())
             {
-                return await UploadFileAsync(fs, file.Name, mimeType, label, cancellationToken).ConfigureAwait(false);
+                return await UploadFileAsync(fs, file.Name, mimeType, label, title, description, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -175,7 +175,7 @@ namespace Sanity.Linq
             return await HandleHttpResponseAsync<SanityDocumentResponse<SanityImageAsset>>(response).ConfigureAwait(false);
         }
 
-        public virtual async Task<SanityDocumentResponse<SanityFileAsset>> UploadFileAsync(Stream stream, string fileName, string contentType = null, string label = null, CancellationToken cancellationToken = default)
+        public virtual async Task<SanityDocumentResponse<SanityFileAsset>> UploadFileAsync(Stream stream, string fileName, string contentType = null, string label = null, string title = null, string description = null, CancellationToken cancellationToken = default)
         {
             var query = new List<string>();
             if (!string.IsNullOrEmpty(fileName))
@@ -185,6 +185,16 @@ namespace Sanity.Linq
             if (!string.IsNullOrEmpty(label))
             {
                 query.Add($"label={WebUtility.UrlEncode(label)}");
+            }
+
+            if (!string.IsNullOrEmpty(title))
+            {
+                query.Add($"title={WebUtility.UrlEncode(title)}");
+            }
+
+            if (!string.IsNullOrEmpty(description))
+            {
+                query.Add($"description={WebUtility.UrlEncode(description)}");
             }
             var uri = $"assets/files/{WebUtility.UrlEncode(_options.Dataset)}{(query.Count > 0 ? "?" + query.Aggregate((c, n) => c + "&" + n) : "")}";
             var request = new HttpRequestMessage(HttpMethod.Post, uri);

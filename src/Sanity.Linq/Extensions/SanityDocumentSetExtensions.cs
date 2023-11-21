@@ -331,18 +331,18 @@ namespace Sanity.Linq
             return images.Context.Client.UploadImageAsync(uri, label, title, description, cancellationToken);
         }
 
-        public static Task<SanityDocumentResponse<SanityFileAsset>> UploadAsync(this SanityDocumentSet<SanityFileAsset> images, Stream stream, string filename, string contentType = null, string label = null, CancellationToken cancellationToken = default)
+        public static Task<SanityDocumentResponse<SanityFileAsset>> UploadAsync(this SanityDocumentSet<SanityFileAsset> images, Stream stream, string filename, string contentType = null, string label = null, string title = null, string description = null, CancellationToken cancellationToken = default)
         {
-            return images.Context.Client.UploadFileAsync(stream, filename, contentType, label, cancellationToken);
+            return images.Context.Client.UploadFileAsync(stream, filename, contentType, label, title, description, cancellationToken);
         }
 
-        public static Task<SanityDocumentResponse<SanityFileAsset>> UploadAsync(this SanityDocumentSet<SanityFileAsset> images, FileInfo file, string filename, string contentType = null, string label = null, CancellationToken cancellationToken = default)
+        public static Task<SanityDocumentResponse<SanityFileAsset>> UploadAsync(this SanityDocumentSet<SanityFileAsset> images, FileInfo file, string filename, string contentType = null, string label = null, string title = null, string description = null, CancellationToken cancellationToken = default)
         {
-            return images.Context.Client.UploadFileAsync(file, label, cancellationToken);
+            return images.Context.Client.UploadFileAsync(file, label, title, description, cancellationToken);
         }
-        public static Task<SanityDocumentResponse<SanityFileAsset>> UploadAsync(this SanityDocumentSet<SanityFileAsset> images, Uri uri, string label = null, CancellationToken cancellationToken = default)
+        public static Task<SanityDocumentResponse<SanityFileAsset>> UploadAsync(this SanityDocumentSet<SanityFileAsset> images, Uri uri, string label = null, string title = null, string description = null, CancellationToken cancellationToken = default)
         {
-            return images.Context.Client.UploadFileAsync(uri, label, cancellationToken);
+            return images.Context.Client.UploadFileAsync(uri, label, title, description, cancellationToken);
         }
     }
 }

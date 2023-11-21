@@ -53,7 +53,7 @@ namespace Sanity.Linq
             }
         }
 
-        public static async Task<SanityDocumentResponse<SanityFileAsset>> UploadFileAsync(this SanityClient client, Uri fileUrl, string label = null, CancellationToken cancellationToken = default)
+        public static async Task<SanityDocumentResponse<SanityFileAsset>> UploadFileAsync(this SanityClient client, Uri fileUrl, string label = null, string title = null, string description = null, CancellationToken cancellationToken = default)
         {
             if (fileUrl == null)
             {
@@ -69,7 +69,7 @@ namespace Sanity.Linq
             }
             using (var fs = await _httpClient.GetStreamAsync(fileUrl).ConfigureAwait(false))
             {
-                var result = await client.UploadFileAsync(fs, fileName, mimeType, label ?? "Source:" + fileUrl.OriginalString, cancellationToken).ConfigureAwait(false);
+                var result = await client.UploadFileAsync(fs, fileName, mimeType, label ?? "Source:" + fileUrl.OriginalString, title, description, cancellationToken).ConfigureAwait(false);
                 fs.Close();
                 return result;
             }
