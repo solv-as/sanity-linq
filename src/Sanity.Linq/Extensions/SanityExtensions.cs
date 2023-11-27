@@ -15,6 +15,8 @@
 
 using Sanity.Linq.CommonTypes;
 using System;
+using System.Reflection;
+using Sanity.Linq.Attributes;
 
 namespace Sanity.Linq.Extensions
 {
@@ -30,25 +32,27 @@ namespace Sanity.Linq.Extensions
             switch (type.Name)
             {
                 case nameof(SanityImageAsset):
-                    {
-                        return "sanity.imageAsset";
-                    }
-                case nameof(SanityFileAsset):
-                    {
-                        return "sanity.fileAsset";
-                    }
-                default:
-                    {
-                        // Remove Sanity and generic type marker from class name
-                        var name = type.Name
-                            .Replace("Sanity", "")
-                            .Replace("`1", "");
+                    return "sanity.imageAsset";
 
-                        //Make first letter lowercase (i.e. camelCase)
-                        return name.ToCamelCase();
+                case nameof(SanityFileAsset):
+                    return "sanity.fileAsset";
+
+                default:
+                    // Get document name from attribute if set
+                    var jsonPropertyAttribute = type.GetCustomAttribute<SanityDocumentName>();
+                    if (jsonPropertyAttribute != null && !string.IsNullOrWhiteSpace(jsonPropertyAttribute.DocumentName))
+                    {
+                        return jsonPropertyAttribute.DocumentName;
                     }
+
+                    // Remove Sanity and generic type marker from class name
+                    var name = type.Name
+                        .Replace("Sanity", "")
+                        .Replace("`1", "");
+
+                    // Make first letter lowercase (i.e., camelCase)
+                    return name.ToCamelCase();
             }
-            
         }
     }
 }
