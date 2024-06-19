@@ -44,6 +44,8 @@ namespace Sanity.Linq.CommonTypes
 
         public long Size { get; set; }
 
+        public string Sha1Hash { get; set; }
+
         public SanityAssetMetadata Metadata { get; set; }
 
     }
